@@ -5,32 +5,34 @@ int main() {
 
 	scanf("%d", &n);
 
-	int a[n][n], b[n][n], c[n][n];
+	long a[n][n], b[n][n];
+	long long c[n][n];
 
 	for (int i=0; i<n; i++) {
 		for (int j=0; j<n; j++) {
-			scanf("%d", &a[i][j]);
+			scanf("%ld", &a[i][j]);
 		}
 	}
 	for (int i=0; i<n; i++) {
 		for (int j=0; j<n; j++) {
-			scanf("%d", &b[i][j]);
+			scanf("%ld", &b[i][j]);
 		}
 	}
 
 	for (int i=0; i<n; i++) {
 		for (int j=0; j<n; j++) {
-			int temp = 0;
+			long long temp = 0;
 			for (int k=0; k<n; k++) {
-				temp = temp + a[i][k]*b[k][j];
+				temp = temp + a[i][k]*b[j][k];
 			}
+			printf("c[%d][%d] = %lld\n", i, j, temp);
 			c[i][j] = temp;
 		}
 	}
 
 	for (int i=0; i<n; i++) {
 		for (int j=0; j<n; j++) {
-			printf("%d\t", c[i][j]);
+			printf("%lld\t", c[i][j]);
 		}
 		printf("\n");
 	}

@@ -1,54 +1,55 @@
-	.section	__TEXT,__text,regular,pure_instructions
-	.build_version macos, 13, 0	sdk_version 13, 3
-	.globl	_main                           ; -- Begin function main
-	.p2align	2
-_main:                                  ; @main
+	.file	"spec.c"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB0:
 	.cfi_startproc
-; %bb.0:
-	sub	sp, sp, #16
+	endbr64
+	pushq	%rbp
 	.cfi_def_cfa_offset 16
-	str	wzr, [sp, #12]
-	mov	w8, #1
-	str	w8, [sp, #8]
-	mov	w8, #2
-	str	w8, [sp, #4]
-	ldr	w8, [sp, #8]
-	subs	w8, w8, #1
-	cset	w8, ne
-	tbnz	w8, #0, LBB0_2
-	b	LBB0_1
-LBB0_1:
-	str	wzr, [sp, #8]
-	b	LBB0_2
-LBB0_2:
-	ldr	w8, [sp, #4]
-	subs	w8, w8, #2
-	cset	w8, ne
-	tbnz	w8, #0, LBB0_4
-	b	LBB0_3
-LBB0_3:
-	str	wzr, [sp, #4]
-	b	LBB0_4
-LBB0_4:
-	ldr	w8, [sp, #8]
-	subs	w8, w8, #0
-	cset	w8, eq
-	tbnz	w8, #0, LBB0_6
-	b	LBB0_5
-LBB0_5:
-	ldr	w8, [sp, #4]
-	subs	w8, w8, #0
-	cset	w8, ne
-	tbnz	w8, #0, LBB0_7
-	b	LBB0_6
-LBB0_6:
-	mov	w8, #2
-	str	w8, [sp]
-	b	LBB0_7
-LBB0_7:
-	ldr	w0, [sp, #12]
-	add	sp, sp, #16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movl	$1, -12(%rbp)
+	movl	$2, -8(%rbp)
+	cmpl	$1, -12(%rbp)
+	jne	.L2
+	movl	$0, -12(%rbp)
+.L2:
+	cmpl	$2, -8(%rbp)
+	jne	.L3
+	movl	$0, -8(%rbp)
+.L3:
+	cmpl	$0, -12(%rbp)
+	je	.L4
+	cmpl	$0, -8(%rbp)
+	jne	.L5
+.L4:
+	movl	$2, -4(%rbp)
+.L5:
+	movl	$0, %eax
+	popq	%rbp
+	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
-                                        ; -- End function
-.subsections_via_symbols
+.LFE0:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0"
+	.section	.note.GNU-stack,"",@progbits
+	.section	.note.gnu.property,"a"
+	.align 8
+	.long	 1f - 0f
+	.long	 4f - 1f
+	.long	 5
+0:
+	.string	 "GNU"
+1:
+	.align 8
+	.long	 0xc0000002
+	.long	 3f - 2f
+2:
+	.long	 0x3
+3:
+	.align 8
+4:
